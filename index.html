@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lego1</title>
+</head>
+<body>
+    <h1>LEGO1</h1>
+
+    <h2>Now Playing</h2>
+    <p id="nowPlaying">Loading...</p>
+
+    <h2>News</h2>
+    <p id="news">Loading...</p>
+
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDhgkt_3HvGHLMK0XtTj4HdrrR-8q-UwIg",
+            authDomain: "lego-1-986ec.firebaseapp.com",
+            databaseURL: "https://lego-1-986ec-default-rtdb.europe-west1.firebasedatabase.app",
+            projectId: "lego-1-986ec",
+            storageBucket: "lego-1-986ec.firebasestorage.app",
+            messagingSenderId: "530920196490",
+            appId: "1:530920196490:web:b73ac9b5392cc463912073"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+
+        get(ref(db, "settings/nowPlaying")).then((snapshot) => {
+            document.getElementById("nowPlaying").textContent = snapshot.val();
+        });
+
+        get(ref(db, "news/message1/text")).then((snapshot) => {
+            document.getElementById("news").textContent = snapshot.val();
+        });
+    </script>
+</body>
+</html>
