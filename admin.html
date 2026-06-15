@@ -1,35 +1,98 @@
+```html
 <!DOCTYPE html>
 <html>
 <head>
-<title>Admin</title>
-<link rel="stylesheet" href="style.css">
+<title>LEGO1 Admin</title>
+<style>
+body{
+    background:#08142b;
+    color:white;
+    font-family:Arial,sans-serif;
+    margin:20px;
+}
+.card{
+    background:#152a5e;
+    padding:20px;
+    border-radius:15px;
+    margin-bottom:20px;
+}
+input, textarea{
+    width:100%;
+    padding:10px;
+    margin-top:10px;
+}
+button{
+    padding:10px 20px;
+    margin-top:10px;
+}
+</style>
 </head>
 <body>
 
-<h1>👑 LEGO1 Admin</h1>
+<h1>👑 LEGO1 ADMIN</h1>
+
+<div class="card">
+<h2>Login</h2>
+<input id="user" placeholder="Username">
+<input id="pass" type="password" placeholder="Password">
+<button onclick="login()">Login</button>
+<p id="loginStatus"></p>
+</div>
+
+<div id="panel" style="display:none;">
 
 <div class="card">
 <h2>News Update</h2>
-<textarea rows="5" cols="50"></textarea>
-<br><br>
-<button>Publish News</button>
+<textarea id="newsText"></textarea>
+<button onclick="saveNews()">Publish News</button>
+</div>
+
+<div class="card">
+<h2>Now Playing</h2>
+<input id="nowPlayingInput">
+<button onclick="saveNowPlaying()">Update</button>
 </div>
 
 <div class="card">
 <h2>Voting</h2>
-<button>Open Voting</button>
-<button>Close Voting</button>
+<button onclick="openVoting()">Open Voting</button>
+<button onclick="closeVoting()">Close Voting</button>
 </div>
 
-<div class="card">
-<h2>Schedule</h2>
-<textarea rows="10" cols="50"></textarea>
 </div>
 
-<div class="card">
-<h2>Video URL</h2>
-<input type="text" placeholder="video url">
-</div>
+<script>
+
+function login(){
+    if(
+        document.getElementById("user").value==="Markus" &&
+        document.getElementById("pass").value==="6642"
+    ){
+        document.getElementById("panel").style.display="block";
+        document.getElementById("loginStatus").innerText="Logged in";
+    }else{
+        document.getElementById("loginStatus").innerText="Wrong login";
+    }
+}
+
+function saveNews(){
+    alert("Firebase connection coming next");
+}
+
+function saveNowPlaying(){
+    alert("Firebase connection coming next");
+}
+
+function openVoting(){
+    alert("Voting opened");
+}
+
+function closeVoting(){
+    alert("Voting closed");
+}
+
+</script>
 
 </body>
 </html>
+```
