@@ -4,38 +4,40 @@
     <title>Lego1</title>
 </head>
 <body>
+  <header>
     <h1>LEGO1</h1>
+    <p>The Brick Television Network</p>
+</header>
 
-    <h2>Now Playing</h2>
+<div class="hero">
+    <h2>LEGOVISION 2026</h2>
+    <p>Hosted at Amanda House</p>
+</div>
+
+<div class="card">
+    <h3>📺 Event Player</h3>
+    <video controls width="100%">
+        <source src="event.mp4" type="video/mp4">
+    </video>
+</div>
+
+<div class="card">
+    <h3>Now Playing</h3>
     <p id="nowPlaying">Loading...</p>
+</div>
 
-    <h2>News</h2>
+<div class="card">
+    <h3>News</h3>
     <p id="news">Loading...</p>
+</div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-        import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+<div class="card">
+    <h3>Voting Status</h3>
+    <p id="voteStatus">Closed</p>
+</div>
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyDhgkt_3HvGHLMK0XtTj4HdrrR-8q-UwIg",
-            authDomain: "lego-1-986ec.firebaseapp.com",
-            databaseURL: "https://lego-1-986ec-default-rtdb.europe-west1.firebasedatabase.app",
-            projectId: "lego-1-986ec",
-            storageBucket: "lego-1-986ec.firebasestorage.app",
-            messagingSenderId: "530920196490",
-            appId: "1:530920196490:web:b73ac9b5392cc463912073"
-        };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        get(ref(db, "settings/nowPlaying")).then((snapshot) => {
-            document.getElementById("nowPlaying").textContent = snapshot.val();
-        });
-
-        get(ref(db, "news/message1/text")).then((snapshot) => {
-            document.getElementById("news").textContent = snapshot.val();
-        });
-    </script>
+<div style="text-align:center;margin:20px;">
+    <button>Vote</button>
+</div>
 </body>
 </html>
