@@ -14,9 +14,9 @@ body{
 }
 
 header{
-    background:#0f1d45;
-    padding:20px;
+    background:#10204d;
     text-align:center;
+    padding:20px;
 }
 
 .hero{
@@ -25,7 +25,7 @@ header{
 }
 
 .card{
-    background:#132553;
+    background:#152a5e;
     margin:20px;
     padding:20px;
     border-radius:15px;
@@ -34,13 +34,13 @@ header{
 .live{
     background:red;
     display:inline-block;
-    padding:6px 12px;
+    padding:8px 15px;
     border-radius:8px;
     font-weight:bold;
 }
 
 button{
-    background:#ff2fa0;
+    background:#ff2ea6;
     color:white;
     border:none;
     padding:12px 20px;
@@ -53,12 +53,12 @@ button:hover{
     opacity:0.9;
 }
 
-a{
-    color:white;
-    text-decoration:none;
+.center{
+    text-align:center;
 }
 </style>
 </head>
+
 <body>
 
 <header>
@@ -67,13 +67,13 @@ a{
 </header>
 
 <div class="hero">
-    <span class="live">LIVE EVENT</span>
+    <span class="live">LIVE</span>
     <h2>LEGOVISION 2026</h2>
     <p>Hosted at Amanda House</p>
 </div>
 
 <div class="card">
-    <h3>🎬 Event Video</h3>
+    <h2>🎬 Event Player</h2>
     <video controls width="100%">
         <source src="event.mp4" type="video/mp4">
     </video>
@@ -81,72 +81,46 @@ a{
 </div>
 
 <div class="card">
-    <h3>📺 Now Playing</h3>
-    <p id="nowPlaying">Loading...</p>
+    <h2>📺 Now Playing</h2>
+    <p id="nowPlaying">LegoVision 2026</p>
 </div>
 
 <div class="card">
-    <h3>📰 News</h3>
-    <p id="news">Loading...</p>
+    <h2>📰 News</h2>
+    <p id="news">Welcome to LegoVision 2026!</p>
 </div>
 
 <div class="card">
-    <h3>🗳️ Voting Status</h3>
-    <p id="voteStatus">Loading...</p>
+    <h2>🗳️ Voting Status</h2>
+    <p id="voteStatus">CLOSED</p>
 </div>
 
 <div class="card">
-    <h3>⏳ Countdown to LegoVision</h3>
-    <p id="countdown">Calculating...</p>
+    <h2>⏳ Countdown</h2>
+    <p id="countdown">Loading...</p>
 </div>
 
-<div style="text-align:center;margin:30px;">
+<div class="center">
     <a href="vote.html">
         <button>Vote</button>
     </a>
+
+    <a href="entries.html">
+        <button>Entries</button>
+    </a>
+
+    <a href="results.html">
+        <button>Results</button>
+    </a>
+
+    <a href="admin.html">
+        <button>Admin</button>
+    </a>
 </div>
 
-<script type="module">
-
-import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
-import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
-
-const firebaseConfig = {
-  apiKey: "AIzaSyDhgkt_3HvGHLMK0XtTj4HdrrR-8q-UwIg",
-  authDomain: "lego-1-986ec.firebaseapp.com",
-  databaseURL: "https://lego-1-986ec-default-rtdb.europe-west1.firebasedatabase.app",
-  projectId: "lego-1-986ec",
-  storageBucket: "lego-1-986ec.firebasestorage.app",
-  messagingSenderId: "530920196490",
-  appId: "1:530920196490:web:b73ac9b5392cc463912073"
-};
-
-const app = initializeApp(firebaseConfig);
-const db = getDatabase(app);
-
-get(ref(db,"settings/nowPlaying"))
-.then(snapshot=>{
-    if(snapshot.exists()){
-        document.getElementById("nowPlaying").innerText=snapshot.val();
-    }
-});
-
-get(ref(db,"news/message1/text"))
-.then(snapshot=>{
-    if(snapshot.exists()){
-        document.getElementById("news").innerText=snapshot.val();
-    }
-});
-
-get(ref(db,"settings/votingOpen"))
-.then(snapshot=>{
-    if(snapshot.exists()){
-        document.getElementById("voteStatus").innerText =
-        snapshot.val() ? "OPEN" : "CLOSED";
-    }
-});
-
+<script>
 function updateCountdown(){
+
     const target = new Date("2026-06-20T21:00:00");
     const now = new Date();
 
@@ -154,7 +128,7 @@ function updateCountdown(){
 
     if(diff <= 0){
         document.getElementById("countdown").innerText =
-        "LegoVision has started!";
+        "LegoVision is LIVE!";
         return;
     }
 
@@ -163,14 +137,14 @@ function updateCountdown(){
     const minutes = Math.floor((diff/(1000*60))%60);
 
     document.getElementById("countdown").innerText =
-    `${days} days ${hours} hours ${minutes} minutes`;
+    days + " days " +
+    hours + " hours " +
+    minutes + " minutes";
 }
 
 updateCountdown();
 setInterval(updateCountdown,60000);
-
 </script>
 
 </body>
 </html>
-```
