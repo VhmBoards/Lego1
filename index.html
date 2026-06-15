@@ -1,43 +1,177 @@
+```html
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-    <title>Lego1</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>LEGO1 - LegoVision 2026</title>
+
+<style>
+body{
+    margin:0;
+    background:#08142b;
+    color:white;
+    font-family:Arial,sans-serif;
+}
+
+header{
+    background:#0f1d45;
+    padding:20px;
+    text-align:center;
+}
+
+.hero{
+    text-align:center;
+    padding:30px;
+}
+
+.card{
+    background:#132553;
+    margin:20px;
+    padding:20px;
+    border-radius:15px;
+}
+
+.live{
+    background:red;
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:8px;
+    font-weight:bold;
+}
+
+button{
+    background:#ff2fa0;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    border-radius:10px;
+    cursor:pointer;
+    font-size:16px;
+}
+
+button:hover{
+    opacity:0.9;
+}
+
+a{
+    color:white;
+    text-decoration:none;
+}
+</style>
 </head>
 <body>
-  <header>
-    <h1>LEGO1</h1>
+
+<header>
+    <h1>📺 LEGO1</h1>
     <p>The Brick Television Network</p>
 </header>
 
 <div class="hero">
+    <span class="live">LIVE EVENT</span>
     <h2>LEGOVISION 2026</h2>
     <p>Hosted at Amanda House</p>
 </div>
 
 <div class="card">
-    <h3>📺 Event Player</h3>
+    <h3>🎬 Event Video</h3>
     <video controls width="100%">
         <source src="event.mp4" type="video/mp4">
     </video>
+    <p>Upload event.mp4 later.</p>
 </div>
 
 <div class="card">
-    <h3>Now Playing</h3>
+    <h3>📺 Now Playing</h3>
     <p id="nowPlaying">Loading...</p>
 </div>
 
 <div class="card">
-    <h3>News</h3>
+    <h3>📰 News</h3>
     <p id="news">Loading...</p>
 </div>
 
 <div class="card">
-    <h3>Voting Status</h3>
-    <p id="voteStatus">Closed</p>
+    <h3>🗳️ Voting Status</h3>
+    <p id="voteStatus">Loading...</p>
 </div>
 
-<div style="text-align:center;margin:20px;">
-    <button>Vote</button>
+<div class="card">
+    <h3>⏳ Countdown to LegoVision</h3>
+    <p id="countdown">Calculating...</p>
 </div>
+
+<div style="text-align:center;margin:30px;">
+    <a href="vote.html">
+        <button>Vote</button>
+    </a>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-app.js";
+import { getDatabase, ref, get } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-database.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDhgkt_3HvGHLMK0XtTj4HdrrR-8q-UwIg",
+  authDomain: "lego-1-986ec.firebaseapp.com",
+  databaseURL: "https://lego-1-986ec-default-rtdb.europe-west1.firebasedatabase.app",
+  projectId: "lego-1-986ec",
+  storageBucket: "lego-1-986ec.firebasestorage.app",
+  messagingSenderId: "530920196490",
+  appId: "1:530920196490:web:b73ac9b5392cc463912073"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getDatabase(app);
+
+get(ref(db,"settings/nowPlaying"))
+.then(snapshot=>{
+    if(snapshot.exists()){
+        document.getElementById("nowPlaying").innerText=snapshot.val();
+    }
+});
+
+get(ref(db,"news/message1/text"))
+.then(snapshot=>{
+    if(snapshot.exists()){
+        document.getElementById("news").innerText=snapshot.val();
+    }
+});
+
+get(ref(db,"settings/votingOpen"))
+.then(snapshot=>{
+    if(snapshot.exists()){
+        document.getElementById("voteStatus").innerText =
+        snapshot.val() ? "OPEN" : "CLOSED";
+    }
+});
+
+function updateCountdown(){
+    const target = new Date("2026-06-20T21:00:00");
+    const now = new Date();
+
+    const diff = target - now;
+
+    if(diff <= 0){
+        document.getElementById("countdown").innerText =
+        "LegoVision has started!";
+        return;
+    }
+
+    const days = Math.floor(diff/(1000*60*60*24));
+    const hours = Math.floor((diff/(1000*60*60))%24);
+    const minutes = Math.floor((diff/(1000*60))%60);
+
+    document.getElementById("countdown").innerText =
+    `${days} days ${hours} hours ${minutes} minutes`;
+}
+
+updateCountdown();
+setInterval(updateCountdown,60000);
+
+</script>
+
 </body>
 </html>
+```
